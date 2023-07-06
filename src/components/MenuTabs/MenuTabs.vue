@@ -1,17 +1,23 @@
 <template>
-  <v-tabs color="primary">
+  <div color="primary">
     <v-tab>
-      <touch-chat-icon/>
+      <router-link to="chats">
+        <touch-chat-icon/>
+      </router-link>
     </v-tab>
 
     <v-tab>
-      <friend-icon/>
+      <router-link to="friends">
+        <friend-icon/>
+      </router-link>
     </v-tab>
 
     <v-tab>
-      <settings-icon/>
+      <router-link to="settings">
+        <settings-icon/>
+      </router-link>
     </v-tab>
-  </v-tabs>
+  </div>
 </template>
 
 <script>
@@ -29,7 +35,11 @@
     opacity: 0;
   }
 
-  .v-slide-group__container .v-btn.v-tab--selected .v-btn__content svg path{
+  a svg path {
+    fill: #000000;
+  }
+
+  a.router-link-active svg path{
     fill: var(--primary-color);
     fill-opacity: 1;
   }

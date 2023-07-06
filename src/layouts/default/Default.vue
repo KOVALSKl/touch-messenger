@@ -13,7 +13,8 @@
       </header>
       <default-view />
       <footer>
-        <div class="d-flex position-sticky position-sm-sticky d-sm-flex d-md-none d-lg-none align-center justify-center w-100">
+        <div class="d-flex position-sm-fixed position-fixed d-sm-flex d-md-none d-lg-none align-center justify-center w-100"
+        id="menu">
           <menu-tabs></menu-tabs>
         </div>
       </footer>
@@ -46,5 +47,7 @@
 </script>
 
 <style>
-
+  #menu {
+    bottom: 10px;
+  }
 </style>
