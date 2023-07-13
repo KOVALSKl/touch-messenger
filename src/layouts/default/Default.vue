@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-container>
+    <v-container class="d-flex flex-column" style="gap: 15px;">
       <header class="header d-flex">
         <div class="logo">
           <h1 class="font-weight-black">

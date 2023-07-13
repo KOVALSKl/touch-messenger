@@ -1,22 +1,22 @@
 <template>
   <div color="primary">
-    <v-tab>
       <router-link to="chats">
-        <touch-chat-icon/>
+        <v-tab>
+          <touch-chat-icon/>
+        </v-tab>
       </router-link>
-    </v-tab>
-
-    <v-tab>
+    
       <router-link to="friends">
-        <friend-icon/>
+        <v-tab>
+          <friend-icon/>
+        </v-tab>
       </router-link>
-    </v-tab>
 
-    <v-tab>
       <router-link to="settings">
-        <settings-icon/>
+        <v-tab>
+          <settings-icon/>
+        </v-tab>
       </router-link>
-    </v-tab>
   </div>
 </template>
 
@@ -33,6 +33,10 @@
 <style>
   .v-slide-group__container .v-btn.v-tab--selected .v-btn__content .v-tab__slider {
     opacity: 0;
+  }
+
+  a:active, a:link {
+    color: var(--primary-color)
   }
 
   a svg path {
