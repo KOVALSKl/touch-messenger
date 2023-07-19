@@ -5,7 +5,7 @@
           <touch-chat-icon/>
         </v-tab>
       </router-link>
-    
+
       <router-link to="friends">
         <v-tab>
           <friend-icon/>
