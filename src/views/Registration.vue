@@ -10,7 +10,7 @@
             @submit="login"
           >
             <v-text-field
-              :model-value="name"
+              v-model="name"
               label="Ваше имя"
               variant="outlined"
               placeholder="Jhon"
@@ -19,7 +19,7 @@
             >
             </v-text-field>
             <v-text-field
-              :model-value="surname"
+              v-model="surname"
               label="Ваша фамилия"
               variant="outlined"
               placeholder="Doe"
@@ -28,7 +28,7 @@
             >
             </v-text-field>
             <v-text-field
-              :model-value="email"
+              v-model="email"
               label="Ваш email"
               placeholder="example@gmail.com"
               variant="outlined"
@@ -38,7 +38,7 @@
             >
             </v-text-field>
             <v-text-field
-              :model-value="username"
+              v-model="username"
               label="Ваш login"
               placeholder="example"
               variant="outlined"
@@ -48,7 +48,7 @@
             >
             </v-text-field>
             <v-text-field
-              :model-value="password"
+              v-model="password"
               label="Ваш пароль"
               variant="outlined"
               type="password"
@@ -59,6 +59,9 @@
             <v-btn variant="flat" color="primary" type="submit">
               отправить
             </v-btn>
+            <v-btn variant="flat" color="primary" @click="getChat">
+              получить чаты пользователя
+            </v-btn>
           </v-form>
         </v-card-text>
       </v-card>
@@ -68,6 +71,8 @@
 
 <script>
   import axios from "axios";
+  import Cookies from 'js-cookie'
+
   export default {
     name: 'RegistrationPage',
     data() {
@@ -80,15 +85,36 @@
       }
     },
     methods: {
-      login() {
-        axios.post(
-          process.env.VITE_API_LINK + '/login',
-          {
-            username: this.username,
-            password: this.password,
+      login(e) {
+        e.preventDefault()
+        axios({
+          method: 'POST',
+          url: import.meta.env.VITE_API_LINK + '/login',
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          data: {
+            'username': this.username,
+            'password': this.password
           }
-        )
-          .then(response => console.log(response.data))
+        })
+          .then((response) => {
+            let token = response.data
+            Cookies.set(import.meta.env.VITE_TOKEN_NAME,
+              token.access_token,
+              {expires: new Date(token.expires)}
+              )
+          })
+      },
+      getChat() {
+        axios({
+          method: 'GET',
+          url: import.meta.env.VITE_API_LINK + '/chats/',
+          headers: {
+            'Authorization': ['Bearer', Cookies.get(import.meta.env.VITE_TOKEN_NAME)].join(' ')
+          }
+        })
+        .then((response) => console.log(response.data))
       }
     }
   }
