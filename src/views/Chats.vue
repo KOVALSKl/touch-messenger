@@ -1,7 +1,9 @@
 <template>
   <router-view>
-    <chat-card>
-    </chat-card>
+    <div class="d-flex">
+      <chat-card>
+      </chat-card>
+    </div>
   </router-view>
 </template>
 

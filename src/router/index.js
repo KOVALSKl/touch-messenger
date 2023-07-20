@@ -1,6 +1,10 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 
+//Dependencies
+import Cookies from 'js-cookie'
+import store from "@/store/store";
+
 const routes = [
   {
     path: '/',
@@ -38,6 +42,28 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+})
+
+router.beforeEach((to, from) => {
+    let token = Cookies.get('auth_token')
+    if (token) {
+      if (!store.state.isLoggedIn)
+        store.commit('changeUserStatus', true)
+      return true
+    }
+
+    if (store.state.isLoggedIn)
+      store.commit('changeUserStatus', false)
+    console.log('here')
+    switch (to.path) {
+      case '/':
+      case '/login':
+      case '/signup':
+        return true
+      default:
+        console.log(to.path)
+        return '/login';
+    }
 })
 
 export default router

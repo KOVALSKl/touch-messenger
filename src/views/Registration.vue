@@ -1,8 +1,8 @@
 <template>
   <router-view>
-    <div class="d-flex flex-column align-center justify-center">
+    <div class="d-flex flex-column align-center fill-height justify-center">
       <h2>Регистрация</h2>
-      <v-card width="370">
+      <v-card width="370" elevation="0">
         <v-card-text>
           <v-form
             class="d-flex flex-column"
@@ -56,14 +56,22 @@
               hide-details
             >
             </v-text-field>
-            <v-btn variant="flat" color="primary" type="submit">
-              отправить
-            </v-btn>
-            <v-btn variant="flat" color="primary" @click="getChat">
-              получить чаты пользователя
+            <v-btn
+              variant="flat"
+              color="primary"
+              type="submit"
+              :loading="loading"
+            >
+              зарегестрироваться
             </v-btn>
           </v-form>
         </v-card-text>
+        <div class="d-flex justify-center mb-10" v-if="isLoggedIn">
+          Уже есть аккаунт?
+          <router-link class="ml-1" to="/login">
+            Войдите
+          </router-link>
+        </div>
       </v-card>
     </div>
   </router-view>
@@ -82,20 +90,23 @@
         username: null,
         password: null,
         email: null,
+        loading: false,
       }
     },
     methods: {
       login(e) {
         e.preventDefault()
+        this.loading = true
+
         axios({
           method: 'POST',
-          url: import.meta.env.VITE_API_LINK + '/login',
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
+          url: import.meta.env.VITE_API_LINK + '/signup',
           data: {
-            'username': this.username,
-            'password': this.password
+            name: this.name,
+            surname: this.surname,
+            login: this.username,
+            email: this.email,
+            password: this.password
           }
         })
           .then((response) => {
@@ -104,19 +115,16 @@
               token.access_token,
               {expires: new Date(token.expires)}
               )
+            this.$store.commit('changeUserStatus', true)
           })
+          .finally(() => this.loading = false)
       },
-      getChat() {
-        axios({
-          method: 'GET',
-          url: import.meta.env.VITE_API_LINK + '/chats/',
-          headers: {
-            'Authorization': ['Bearer', Cookies.get(import.meta.env.VITE_TOKEN_NAME)].join(' ')
-          }
-        })
-        .then((response) => console.log(response.data))
+    },
+    computed: {
+      isLoggedIn() {
+        return !this.$store.state.isLoggedIn;
       }
-    }
+    },
   }
 </script>
 

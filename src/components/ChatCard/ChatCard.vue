@@ -1,5 +1,11 @@
 <template>
-  <v-card elevation="0" class="bg-card-bg d-flex chat-card" style="gap: 10px;" link>
+  <v-card
+    elevation="0"
+    class="bg-card-bg d-flex chat-card"
+    style="gap: 10px;"
+    min-width="340"
+    link
+  >
     <div class="avatar">
       <v-avatar color="black" rounded="0" size="60">
         TS

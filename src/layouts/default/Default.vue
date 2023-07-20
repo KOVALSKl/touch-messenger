@@ -1,24 +1,27 @@
 <template>
   <v-app>
-    <v-container class="d-flex flex-column" style="gap: 15px;">
-      <header class="header d-flex">
+    <v-container class="d-flex flex-column fill-height" style="gap: 15px;">
+      <header class="header d-flex justify-sm-center justify-center">
         <div class="logo">
-          <h1 class="font-weight-black">
+          <h1 class="font-weight-black text-sm-center text-center text-md-left text-lg-left">
             To<span class="text-primary">u</span>ch
           </h1>
         </div>
-        <div class="d-none d-sm-none d-md-flex d-lg-flex align-center justify-center w-100">
+        <div
+          class="d-none d-sm-none d-md-flex d-lg-flex align-center justify-center w-100"
+          v-if="isLoggedIn"
+        >
           <menu-tabs></menu-tabs>
         </div>
       </header>
       <default-view />
-      <footer>
-        <div class="d-flex position-sm-fixed position-fixed d-sm-flex d-md-none d-lg-none align-center justify-center w-100"
-        id="menu">
-          <menu-tabs></menu-tabs>
-        </div>
-      </footer>
     </v-container>
+    <footer>
+      <div class="d-flex position-sm-fixed position-fixed d-sm-flex d-md-none d-lg-none align-center justify-center w-100"
+           id="menu" v-if="isLoggedIn">
+        <menu-tabs></menu-tabs>
+      </div>
+    </footer>
   </v-app>
 </template>
 
@@ -27,7 +30,7 @@
   import ChatIcon from "@/components/Icons/ChatIcon";
   import FriendsIcon from "@/components/Icons/FriendsIcon";
   import SettingsIcon from "@/components/Icons/SettingsIcon";
-  import MenuTabs from "@/components/MenuTabs/MenuTabs";
+  import MenuTabs from "@/components/MenuTabs/MenuTabs";;
 
   export default {
     name: 'Default',
@@ -43,6 +46,12 @@
     },
     methods: {
     },
+
+    computed: {
+      isLoggedIn() {
+        return this.$store.state.isLoggedIn;
+      }
+    }
   }
 </script>
 
