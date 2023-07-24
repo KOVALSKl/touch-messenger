@@ -31,10 +31,6 @@
 </script>
 
 <style>
-  .v-slide-group__container .v-btn.v-tab--selected .v-btn__content .v-tab__slider {
-    opacity: 0;
-  }
-
   a:active, a:link {
     color: var(--primary-color)
   }

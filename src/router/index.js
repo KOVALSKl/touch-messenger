@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Cookies from 'js-cookie'
 import store from "@/store/store";
 
+
 const routes = [
   {
     path: '/',
@@ -13,7 +14,12 @@ const routes = [
       {
         path: 'chats',
         name: 'Chats',
-        component: () => import('@/views/Chats.vue'),
+        component: () => import('@/views/Chats.vue')
+      },
+      {
+        path: 'chats/:id',
+        name: 'Chat',
+        component: () => import('@/views/Chat.vue'),
       },
       {
         path: 'friends',
@@ -35,7 +41,7 @@ const routes = [
         name: 'signup',
         component: () => import('@/views/Registration.vue'),
       },
-    ],
+    ]
   },
 ]
 
@@ -54,7 +60,6 @@ router.beforeEach((to, from) => {
 
     if (store.state.isLoggedIn)
       store.commit('changeUserStatus', false)
-    console.log('here')
     switch (to.path) {
       case '/':
       case '/login':
