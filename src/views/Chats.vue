@@ -28,10 +28,16 @@
     },
     data() {
       return {
-        chats: [],
         loading: false,
       }
     },
+
+    computed: {
+      chats() {
+        return this.$store.state.userChats
+      }
+    },
+
     methods: {
       getChats() {
         this.loading = true;
@@ -43,12 +49,17 @@
             'Authorization': 'Bearer ' + Cookies.get(import.meta.env.VITE_TOKEN_NAME)
           },
         })
-        .then((response) => this.chats = response.data.chats)
+        .then((response) => {
+          let chats = response.data.chats;
+          this.$store.commit('setUserChats', chats)
+        })
         .finally(() => this.loading = false)
       }
     },
     created() {
-      this.getChats();
+      if(this.chats.length === 0){
+        this.getChats()
+      }
     }
   }
 </script>

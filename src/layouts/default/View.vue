@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-main class="w-100">
     <router-view />
   </v-main>
 </template>

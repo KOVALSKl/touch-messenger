@@ -1,18 +1,18 @@
 <template>
   <div color="primary">
-      <router-link to="chats">
+      <router-link to="/chats">
         <v-tab>
           <touch-chat-icon/>
         </v-tab>
       </router-link>
 
-      <router-link to="friends">
+      <router-link to="/friends">
         <v-tab>
           <friend-icon/>
         </v-tab>
       </router-link>
 
-      <router-link to="settings">
+      <router-link to="/settings">
         <v-tab>
           <settings-icon/>
         </v-tab>

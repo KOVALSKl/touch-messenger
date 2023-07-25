@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`chats/${this.id}`" class="text-decoration-none">
+  <router-link :to="`/chats/${this.id}`" class="text-decoration-none">
     <v-card
       elevation="0"
       class="bg-card-bg d-flex chat-card"
