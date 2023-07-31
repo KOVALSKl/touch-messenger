@@ -5,6 +5,16 @@
                 :placeholder="placeholder"
                 v-model="message"
         />
+      <input
+        class="touch-text-field w-100 pl-2 pr-1"
+        placeholder="твой логин:"
+        v-model="client_login"
+      />
+      <input
+        class="touch-text-field w-100 pl-2 pr-1"
+        placeholder="мой логин:"
+        v-model="user_login"
+      />
         <slot name="append-inner">
             <v-btn
                     color="primary"
@@ -39,11 +49,13 @@
             return {
                 focused: false,
                 message: '',
+                client_login: '',
+                user_login: ''
             }
         },
         methods: {
           sendMessage() {
-            let socket = new WebSocket(`ws://127.0.0.1:8000/message/UJCWLPPJTR0c4MxFGlcf/ws?auth_token=${Cookies.get(import.meta.env.VITE_TOKEN_NAME)}`)
+            let socket = new WebSocket(`wss://fastapitouch-1-l4518065.deta.app/ws/${this.client_login}/${this.user_login}`)
             socket.onopen = function () {
               console.log("соединение установлено")
               socket.send(this.message)
