@@ -41,6 +41,11 @@ const routes = [
         name: 'signup',
         component: () => import('@/views/Registration.vue'),
       },
+      {
+        path: 'test',
+        name: 'test',
+        component: () => import('@/views/FeatureTestPage.vue')
+      },
     ]
   },
 ]
@@ -52,6 +57,7 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
     let token = Cookies.get('auth_token')
+    console.log(token)
     if (token) {
       if (!store.state.isLoggedIn)
         store.commit('changeUserStatus', true)

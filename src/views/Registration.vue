@@ -111,11 +111,14 @@
         })
           .then((response) => {
             let token = response.data
-            Cookies.set(import.meta.env.VITE_TOKEN_NAME,
-              token.access_token,
-              {expires: new Date(token.expires)}
+            console.log(token)
+            if (token){
+              Cookies.set(import.meta.env.VITE_TOKEN_NAME,
+                token.access_token,
+                {expires: new Date(token.expires)}
               )
-            this.$store.commit('changeUserStatus', true)
+              this.$store.commit('changeUserStatus', true)
+            }
           })
           .finally(() => this.loading = false)
       },
