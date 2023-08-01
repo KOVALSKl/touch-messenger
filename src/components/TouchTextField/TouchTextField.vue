@@ -55,8 +55,9 @@
         },
         methods: {
           sendMessage() {
-            let socket = new WebSocket(`wss://fastapitouch-1-l4518065.deta.app/ws/${this.client_login}/${this.user_login}`)
-            socket.onopen = function () {
+            let socket = new WebSocket(`wss://fastapitouch-1-l4518065.deta.app/webs`)
+            //let socket = new WebSocket(`wss://fastapitouch-1-l4518065.deta.app/ws/${this.client_login}/${this.user_login}`)
+            socket.onopen = () => {
               console.log("соединение установлено")
               socket.send(this.message)
             }

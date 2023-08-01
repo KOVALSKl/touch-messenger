@@ -19,15 +19,13 @@
               clearable
             >
             </v-text-field>
-            <v-text-field
+            <password-field
               v-model="password"
               label="Ваш пароль"
               variant="outlined"
-              type="password"
               name="password"
               hide-details
-            >
-            </v-text-field>
+            />
             <v-btn
               variant="flat"
               color="primary"
@@ -54,8 +52,14 @@
   import axios from "axios";
   import Cookies from 'js-cookie'
 
+  //Components
+  import PasswordField from '@/components/PasswordField/PasswordField'
+
   export default {
     name: 'RegistrationPage',
+    components: {
+      PasswordField,
+    },
     data() {
       return {
         username: null,
