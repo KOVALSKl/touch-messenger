@@ -1,1 +1,2 @@
-const userWebsocket = new WebSocket("ws://10.40.177.28.3000")
+const userWebsocket = new WebSocket(`wss://${import.meta.env.VITE_API_LINK_PAYLOAD}`)
+

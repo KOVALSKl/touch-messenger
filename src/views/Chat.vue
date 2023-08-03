@@ -58,6 +58,7 @@
     },
     data() {
       return {
+        socket: null,
         chat: null,
         loading: false,
       }
@@ -78,12 +79,26 @@
       },
 
       sendMessage() {
-
+        this.socket?.send({
+          type: 0,
+          message: this.message,
+          auth_token: Cookies.get(import.meta.env.VITE_TOKEN_NAME)
+        })
       },
     },
 
     created() {
       this.getChatContent();
+      this.socket = new WebSocket(
+        `wss://${import.meta.env.VITE_API_LINK_PAYLOAD}/chats/${this.$route.params.id}/ws/message?auth_token=${Cookies.get(import.meta.env.VITE_TOKEN_NAME)}`
+      )
+      this.socket.onerror = (err) => {
+        console.log(err)
+      }
+
+      this.socket.onmessage = (message) => {
+        console.log(message)
+      }
     }
   }
 </script>
