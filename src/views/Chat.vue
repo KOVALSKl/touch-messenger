@@ -16,24 +16,20 @@
         </div>
         <div class="message-form-container">
           <v-form id="message-form">
-            <touch-text-field/>
-            <v-input
-              id="message-form__text-field"
-              placeholder="Сообщение"
-              variant="outlined"
-              density="comfortable"
-              hide-details
-            >
+            <touch-text-field>
               <template #append-inner>
                 <v-btn
+                  color="primary"
+                  class="send-message-btn"
                   size="35"
                   variant="text"
                   style="border-radius: 100%"
+                  @click="sendMessage"
                 >
                   <send-icon/>
                 </v-btn>
               </template>
-            </v-input>
+            </touch-text-field>
           </v-form>
         </div>
       </main>
@@ -79,7 +75,11 @@
         })
         .then((response) => this.chat = response.data)
         .finally(() => this.loading = false)
-      }
+      },
+
+      sendMessage() {
+
+      },
     },
 
     created() {
