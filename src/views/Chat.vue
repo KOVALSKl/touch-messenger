@@ -16,7 +16,7 @@
         </div>
         <div class="message-form-container">
           <v-form id="message-form">
-            <touch-text-field>
+            <touch-text-field v-model:content="message">
               <template #append-inner>
                 <v-btn
                   color="primary"
@@ -48,7 +48,8 @@
   export default {
     name: 'Chat',
     props: {
-      id: String
+      id: String,
+      message: String,
     },
     components: {
       LoadingSpinner,
@@ -61,6 +62,7 @@
         socket: null,
         chat: null,
         loading: false,
+        message: '',
       }
     },
     methods: {
@@ -79,11 +81,7 @@
       },
 
       sendMessage() {
-        this.socket?.send({
-          type: 0,
-          message: this.message,
-          auth_token: Cookies.get(import.meta.env.VITE_TOKEN_NAME)
-        })
+        this.socket?.send(this.message)
       },
     },
 
@@ -99,7 +97,7 @@
       this.socket.onmessage = (message) => {
         console.log(message)
       }
-    }
+    },
   }
 </script>
 

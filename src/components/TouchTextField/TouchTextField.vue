@@ -3,7 +3,8 @@
         <input
                 class="touch-text-field w-100 pl-2 pr-1"
                 :placeholder="placeholder"
-                v-model="message"
+                :value="content"
+                @input="$emit('update:content', $event.target.value)"
         />
         <slot name="append-inner">
         </slot>
@@ -22,12 +23,15 @@
             placeholder: {
                 type: String,
                 default: () => 'Сообщение'
-            }
+            },
+            content: String,
         },
+        emits: [
+          'update:content'
+        ],
         data() {
             return {
-                focused: false,
-                message: '',
+                focused: false
             }
         },
     }
