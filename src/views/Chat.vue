@@ -59,19 +59,29 @@
     },
     data() {
       return {
-        socket: null,
         chat: null,
         loading: false,
         message: '',
       }
     },
+
+    computed: {
+      socket() {
+        return this.$store.state.userWebSocketConnection;
+      },
+
+      chatID() {
+        return this.$route.params.id;
+      }
+    },
+
     methods: {
       getChatContent() {
         this.loading = true;
         console.log(this.$route)
         axios({
           method: 'GET',
-          url: import.meta.env.VITE_API_LINK + `/chats/${this.$route.params.id}`,
+          url: import.meta.env.VITE_API_LINK + `/chats/${this.chatID}`,
           headers: {
             'Authorization':'Bearer ' + Cookies.get(import.meta.env.VITE_TOKEN_NAME)
           }
@@ -81,15 +91,19 @@
       },
 
       sendMessage() {
-        this.socket?.send(this.message)
+        this.socket?.send(JSON.stringify({
+            type: 0,
+            content: {
+              created_at: new Date(),
+              creator_login: this.$store.state.user.login,
+              content: this.message
+            }
+        }))
       },
     },
 
     created() {
       this.getChatContent();
-      this.socket = new WebSocket(
-        `wss://${import.meta.env.VITE_API_LINK_PAYLOAD}/chats/${this.$route.params.id}/ws/message?auth_token=${Cookies.get(import.meta.env.VITE_TOKEN_NAME)}`
-      )
       this.socket.onerror = (err) => {
         console.log(err)
       }
@@ -97,6 +111,14 @@
       this.socket.onmessage = (message) => {
         console.log(message)
       }
+
+      this.socket.send(JSON.stringify({
+        type: 1,
+        content: {
+          chat_id: this.chatID,
+          auth_token: Cookies.get(import.meta.env.VITE_TOKEN_NAME)
+        }
+      }))
     },
   }
 </script>
