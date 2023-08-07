@@ -1,22 +1,27 @@
 <template>
-  <div>
+  <div v-if="message">
     <div class="message-container d-flex flex-column align-end">
       <div class="message text-left pl-5 pr-5 pt-2 pb-2 bg-primary">
         <slot name="message-text">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem impedit repudiandae sequi!
+          {{message.content}}
         </slot>
       </div>
       <div class="send-time">
-        <span class="sender-name send-time__value font-weight-bold">Крис в </span>
-        <span class="send-time__value font-weight-bold">12:13</span>
+        <span class="sender-name send-time__value font-weight-bold">{{message.creator_login}} &nbsp;</span>
+        <span class="send-time__value font-weight-bold">{{message.created_at}}</span>
       </div>
     </div>
   </div>
+<!--  можно добавить скелетона -->
 </template>
 
 <script>
   export default {
-    name: 'Message',
+    name: 'ChatMessage',
+    props: {
+      message: null,
+      isMine: false,
+    },
     components: {},
     data() {
       return {

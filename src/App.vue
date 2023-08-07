@@ -12,14 +12,17 @@
     computed: {
       userLoggedIn() {
         return this.$store.state.isLoggedIn;
+      },
+
+      activeChat() {
+        return this.$store.state.activeChat;
       }
     },
-    //https://touch-messenger.onrender.com - LINK
     methods: {
       createConnection() {
         let token = Cookies.get(import.meta.env.VITE_TOKEN_NAME)
         const userConnection = new WebSocket(
-          `ws://${import.meta.env.VITE_API_LINK_PAYLOAD}/communication/ws?auth_token=${token}`
+          `wss://${import.meta.env.VITE_API_LINK_PAYLOAD}/communication/ws?auth_token=${token}`
         )
 
         userConnection.onopen = () => {
@@ -27,7 +30,17 @@
             'setUserConnection',
             userConnection
           )
-          console.log('Connected')
+        }
+
+        userConnection.onerror = (err) => {
+          console.log(err)
+        }
+
+        userConnection.onmessage = (message) => {
+          if (this.activeChat) {
+            const messageModel = JSON.parse(message.data)
+            this.activeChat.messages.push(messageModel)
+          }
         }
 
         userConnection.onclose = () => {

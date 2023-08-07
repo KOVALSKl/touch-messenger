@@ -6,6 +6,7 @@ const store = createStore({
     user: null,
     isLoggedIn: false,
     userChats: [],
+    activeChat: null,
   },
 
   mutations: {
@@ -22,7 +23,11 @@ const store = createStore({
     },
 
     setUserConnection(state, userWebSocketConnection){
-      state.userWebSocketConnection = userWebSocketConnection
+      state.userWebSocketConnection = userWebSocketConnection;
+    },
+
+    setActiveChat(state, chatModel) {
+      state.activeChat = chatModel
     }
   }
 })

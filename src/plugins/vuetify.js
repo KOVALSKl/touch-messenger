@@ -21,6 +21,7 @@ export default createVuetify({
           primary: '#1867C0',
           secondary: '#5CBBF6',
           'card-bg': '#F2F2F2',
+          'alien-message': '#75787B',
         },
       },
       dark: {

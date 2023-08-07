@@ -1,7 +1,7 @@
 <template>
   <router-view>
     <loading-spinner v-if="loading & !chat"/>
-    <div class="chat-container d-flex flex-column w-100 fill-height" v-else>
+    <div class="chat-container d-flex flex-column w-100 h-100 overflow-y-hidden" style="max-height: 100%" v-else>
       <header class="d-flex justify-space-between align-center w-100 chat-content-border chat-header">
         <div class="avatar">
           <v-avatar color="grey" rounded="0" size="50">
@@ -10,9 +10,16 @@
         </div>
         <h3>{{chat.chat_name}}</h3>
       </header>
-      <main class="d-flex flex-column w-100 fill-height chat-content-border pa-2">
-        <div class="messages h-100">
-          <Message></Message>
+      <main class="d-flex flex-column w-100 h-100 overflow-hidden justify-space-between chat-content-border pa-2">
+        <div class="messages-container overflow-y-hidden">
+          <div class="messages overflow-y-auto">
+            <chat-message
+              v-for="chat_message in chat.messages"
+              :key="chat_message.created_at"
+              :message="chat_message"
+            >
+            </chat-message>
+          </div>
         </div>
         <div class="message-form-container">
           <v-form id="message-form">
@@ -39,11 +46,13 @@
 
 <script>
   import axios from 'axios'
-  import Cookies from 'js-cookie'
   import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+  import ChatMessage from "@/components/Message/Message"
   import SendIcon from "@/components/Icons/SendIcon";
-  import Message from '@/components/Message/Message'
   import TouchTextField from '@/components/TouchTextField/TouchTextField';
+
+  import {Message, MessageType, UserStatus, WebSocketMessage} from "@/lib/classes";
+  import {cookieMixin} from '@/lib/mixins'
 
   export default {
     name: 'Chat',
@@ -51,9 +60,12 @@
       id: String,
       message: String,
     },
+    mixins: [
+      cookieMixin,
+    ],
     components: {
       LoadingSpinner,
-      Message,
+      ChatMessage,
       SendIcon,
       TouchTextField,
     },
@@ -78,48 +90,86 @@
     methods: {
       getChatContent() {
         this.loading = true;
-        console.log(this.$route)
         axios({
           method: 'GET',
           url: import.meta.env.VITE_API_LINK + `/chats/${this.chatID}`,
           headers: {
-            'Authorization':'Bearer ' + Cookies.get(import.meta.env.VITE_TOKEN_NAME)
+            'Authorization':'Bearer ' + this.authToken
           }
         })
-        .then((response) => this.chat = response.data)
+        .then((response) => {
+          this.chat = response.data
+          console.log(response.data)
+        })
         .finally(() => this.loading = false)
       },
 
       sendMessage() {
-        this.socket?.send(JSON.stringify({
-            type: 0,
-            content: {
-              created_at: new Date(),
-              creator_login: this.$store.state.user.login,
-              content: this.message
-            }
-        }))
+        this.sendWebsocketMessage(
+          MessageType.MESSAGE,
+          new Message(
+            new Date(),
+            this.$store.state.user.login,
+            this.message
+          )
+        )
       },
+
+      sendWebsocketMessage(type, message) {
+        if (this.socket) {
+          const msg = new WebSocketMessage(
+            type,
+            {...message}
+          )
+
+          const msgJSONString = msg.toJSON()
+
+          this.socket.send(msgJSONString)
+        }
+      },
+    },
+
+    watch: {
+      socket(value) {
+        if (value) {
+          const msg = new WebSocketMessage(
+            MessageType.UPDATEUSERSTATUS,
+            new UserStatus(
+              this.authToken,
+              this.chatID,
+            )
+          )
+          const msgJSONString = msg.toJSON()
+
+          value.send(msgJSONString)
+        }
+      },
+
+      chat(value) {
+        if (value) {
+          this.$store.commit('setActiveChat', value)
+        }
+      }
     },
 
     created() {
       this.getChatContent();
-      this.socket.onerror = (err) => {
-        console.log(err)
+      if (this.socket) {
+        this.sendWebsocketMessage(
+          MessageType.UPDATEUSERSTATUS,
+          new UserStatus(
+            this.authToken,
+            this.chatID,
+          )
+        )
       }
-
-      this.socket.onmessage = (message) => {
-        console.log(message)
-      }
-
-      this.socket.send(JSON.stringify({
-        type: 1,
-        content: {
-          chat_id: this.chatID,
-          auth_token: Cookies.get(import.meta.env.VITE_TOKEN_NAME)
-        }
-      }))
     },
+
+    unmounted() {
+      if (this.$store.state.activeChat) {
+        this.$store.commit('setActiveChat', null)
+      }
+    }
   }
 </script>
 
