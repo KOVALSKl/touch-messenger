@@ -14,6 +14,10 @@
         return this.$store.state.isLoggedIn;
       },
 
+      userChats() {
+        return this.$store.state.userChats;
+      },
+
       activeChat() {
         return this.$store.state.activeChat;
       }
@@ -36,11 +40,19 @@
           console.log(err)
         }
 
-        userConnection.onmessage = (message) => {
-          if (this.activeChat) {
-            const messageModel = JSON.parse(message.data)
+        userConnection.onmessage = (response) => {
+          const responseMessage = JSON.parse(response.data)
+          const messageModel = responseMessage.message.content
+
+          if(this.activeChat && this.activeChat.id == responseMessage.chat_id) {
             this.activeChat.messages.push(messageModel)
+          } else {
+            const chatModel = this.getChatByID(responseMessage.chat_id)
+            if (chatModel) {
+              chatModel.messages.push(messageModel)
+            }
           }
+          this.$store.commit('setIsMessageSending', false);
         }
 
         userConnection.onclose = () => {
@@ -51,12 +63,19 @@
         }
       },
 
+      getChatByID(chatID) {
+        for(let i=0; i < this.userChats.length; i++) {
+          if (this.userChats[i].chat_id === chatID)
+            return this.userChats[i]
+        }
+        return null
+      },
+
       getUserFromToken() {
         let token = Cookies.get(import.meta.env.VITE_TOKEN_NAME)
         const userModel = jwtDecode(token)
 
         this.$store.commit('setUser', userModel);
-        console.log(this.$store.state.user)
       }
     },
 
@@ -68,5 +87,8 @@
         }
       }
     },
+    mounted() {
+      this.router
+    }
   }
 </script>

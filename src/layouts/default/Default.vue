@@ -1,7 +1,7 @@
 <template>
-  <v-app>
-    <v-container class="d-flex flex-column fill-height" style="gap: 15px;">
-      <header class="header d-flex justify-sm-center justify-center justify-md-space-between justify-lg-space-between w-100">
+  <v-app class="d-flex flex-column" style="height: 100vh;">
+    <v-container class="d-flex flex-column flex-nowrap fill-height" style="gap: 15px; max-height: 100%;">
+      <header class="d-flex justify-sm-center justify-center justify-md-space-between justify-lg-space-between w-100">
         <div class="logo">
           <h1 class="font-weight-black text-sm-center text-center text-md-left text-lg-left">
             To<span class="text-primary">u</span>ch
@@ -16,9 +16,9 @@
       </header>
       <default-view />
     </v-container>
-    <footer class="footer">
+    <footer class="footer" v-if="isLoggedIn & !isChat">
       <div class="d-flex position-sm-fixed position-fixed d-sm-flex d-md-none d-lg-none align-center justify-center w-100"
-           id="menu" v-if="isLoggedIn & !isChat">
+           id="menu">
         <menu-tabs></menu-tabs>
       </div>
     </footer>

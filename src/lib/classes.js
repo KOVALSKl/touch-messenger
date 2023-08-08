@@ -30,6 +30,7 @@ class WebSocketMessage {
   }
 }
 
+
 class UserStatus {
   constructor(auth_token, chat_id = '') {
     this.chat_id = chat_id;

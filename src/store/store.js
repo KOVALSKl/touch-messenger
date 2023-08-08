@@ -4,9 +4,10 @@ const store = createStore({
   state: {
     userWebSocketConnection: null,
     user: null,
-    isLoggedIn: false,
-    userChats: [],
     activeChat: null,
+    userChats: [],
+    isLoggedIn: false,
+    isMessageSending: false,
   },
 
   mutations: {
@@ -28,6 +29,10 @@ const store = createStore({
 
     setActiveChat(state, chatModel) {
       state.activeChat = chatModel
+    },
+
+    setIsMessageSending(state, status) {
+      state.isMessageSending = status
     }
   }
 })

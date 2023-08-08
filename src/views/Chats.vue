@@ -2,9 +2,9 @@
   <router-view>
     <loading-spinner v-if="loading"/>
     <div class="d-flex flex-column" style="gap: 15px;" v-else>
-      <chat-card v-for="chat in this.chats" :id="chat.chat_id" :key="chat.chat_id">
+      <chat-card v-for="chat in this.chats" :chat-name="chat.chat_name" :id="chat.chat_id" :key="chat.chat_id">
         <template #chat-name>
-          {{chat.chat_id}}
+          {{chat.chat_name}}
         </template>
         <template>
           {{chat.created_at}}

@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`/chats/${this.id}`" class="text-decoration-none">
+  <router-link :to="`/chats/${this.id}?name=${this.chatName}`" class="text-decoration-none">
     <v-card
       elevation="0"
       class="bg-card-bg d-flex chat-card"
@@ -36,6 +36,7 @@
     name: 'ChatCard',
     props: {
       id: String,
+      chatName: String,
     },
     components: {},
     data() {

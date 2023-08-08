@@ -9,6 +9,7 @@ import store from "@/store/store";
 const routes = [
   {
     path: '/',
+    redirect: {name: 'Chats'},
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
