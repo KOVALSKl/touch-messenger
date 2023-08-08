@@ -11,7 +11,7 @@
         <h3>{{chatName}}</h3>
       </header>
       <main class="d-flex flex-column w-100 fill-height">
-        <div class="messages-container fill-height">
+        <div class="messages-container fill-height overflow-y-auto" style="max-height: 400px;">
           <div class="messages">
             <chat-message
               v-for="chat_message in chat.messages"
@@ -82,6 +82,12 @@
     },
 
     computed: {
+
+      messages() {
+        if(this.chat)
+          return this.chat.messages
+      },
+
       socket() {
         return this.$store.state.userWebSocketConnection;
       },
@@ -167,7 +173,7 @@
             ...value
           })
         }
-      }
+      },
     },
 
     created() {
