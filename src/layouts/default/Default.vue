@@ -15,8 +15,8 @@
         </div>
       </header>
       <default-view />
-      <footer class="footer" v-if="isLoggedIn & !isChat">
-        <div class="d-flex position-sm-fixed position-fixed d-sm-flex d-md-none d-lg-none align-center justify-center w-100"
+      <footer class="footer d-flex w-100 align-center justify-center" v-if="isLoggedIn & !isChat">
+        <div class="d-flex d-sm-flex d-md-none d-lg-none align-center justify-center w-100"
              id="menu">
           <menu-tabs></menu-tabs>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <router-view>
-    <loading-spinner v-if="loading & !chat"/>
-    <div class="d-flex flex-column justify-space-between fill-height overflow-hidden" style="gap:7px;">
+    <loading-spinner v-if="loading & !chat & !messages & !isAutoScrolling"/>
+    <div class="d-flex flex-column justify-space-between fill-height overflow-hidden chat-container">
       <header class="d-flex justify-space-between align-center w-100 chat-content-border chat-header">
         <div class="avatar">
           <v-avatar color="grey" rounded="0" size="50">
@@ -10,10 +10,10 @@
         </div>
         <h3>{{chatName}}</h3>
       </header>
-      <main class="overflow-y-auto">
-        <div class="messages">
+      <main class="overflow-y-auto" id="messages-container">
+        <div class="messages" id="messages">
           <chat-message
-            v-for="chat_message in chat.messages"
+            v-for="chat_message in messages"
             :key="chat_message.created_at"
             :message="chat_message"
           >
@@ -55,6 +55,7 @@
 
   import {Message, MessageType, UserStatus, WebSocketMessage} from "@/lib/classes";
   import {cookieMixin} from '@/lib/mixins'
+  import {nextTick} from "vue";
 
   export default {
     name: 'Chat',
@@ -75,6 +76,7 @@
       return {
         chat: null,
         loading: false,
+        isAutoScrolling: false,
         message: '',
       }
     },
@@ -82,8 +84,9 @@
     computed: {
 
       messages() {
-        if(this.chat)
+        if (this.chat)
           return this.chat.messages
+        return null
       },
 
       socket() {
@@ -101,6 +104,10 @@
       isMessageSending() {
         return this.$store.state.isMessageSending;
       },
+
+      messagesContainer() {
+        return document.getElementById('messages-container');
+      }
     },
 
     methods: {
@@ -115,7 +122,6 @@
         })
         .then((response) => {
           this.chat = response.data
-          console.log(response.data)
         })
         .finally(() => this.loading = false)
       },
@@ -132,6 +138,12 @@
           )
         )
         this.message = '';
+      },
+
+      scrollDown() {
+        console.log(this.messagesContainer.scrollHeight);
+        this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+        this.isAutoScrolling = false;
       },
 
       sendWebsocketMessage(type, message) {
@@ -172,6 +184,24 @@
           })
         }
       },
+
+      loading(value) {
+        if (!value) {
+          this.isAutoScrolling = true;
+          this.scrollDown()
+        }
+      },
+
+      messages: {
+        handler(value) {
+          console.log(value)
+          if (value && value.length > 0) {
+            console.log(this.messagesContainer.scrollHeight)
+            this.scrollDown();
+          }
+        },
+        deep: true
+      },
     },
 
     created() {
@@ -185,6 +215,13 @@
           )
         )
       }
+    },
+
+    mounted() {
+      console.log('activated')
+      setTimeout(() => {
+
+      }, 5000)
     },
 
     unmounted() {
@@ -221,6 +258,10 @@
 
   #message-form__text-field .v-input__slot {
     border-radius: 20px;
+  }
+
+  #messages-container::-webkit-scrollbar {
+    width: 0;
   }
 
 </style>
