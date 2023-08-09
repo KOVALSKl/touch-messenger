@@ -1,7 +1,7 @@
 <template>
   <router-view>
     <loading-spinner v-if="loading & !chat"/>
-    <div class="chat-container d-flex flex-column fill-height w-100 overflow-y-hidden" v-else>
+    <div class="d-flex flex-column justify-space-between fill-height overflow-hidden" style="gap:7px;">
       <header class="d-flex justify-space-between align-center w-100 chat-content-border chat-header">
         <div class="avatar">
           <v-avatar color="grey" rounded="0" size="50">
@@ -10,16 +10,14 @@
         </div>
         <h3>{{chatName}}</h3>
       </header>
-      <main class="d-flex flex-column w-100 fill-height">
-        <div class="messages-container fill-height overflow-y-auto" style="max-height: 400px;">
-          <div class="messages">
-            <chat-message
-              v-for="chat_message in chat.messages"
-              :key="chat_message.created_at"
-              :message="chat_message"
-            >
-            </chat-message>
-          </div>
+      <main class="overflow-y-auto">
+        <div class="messages">
+          <chat-message
+            v-for="chat_message in chat.messages"
+            :key="chat_message.created_at"
+            :message="chat_message"
+          >
+          </chat-message>
         </div>
       </main>
       <footer>

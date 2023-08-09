@@ -1,7 +1,7 @@
 <template>
-  <v-main class="w-100 d-flex flex-column" style="max-height: 100%; overflow-y: hidden; ">
+  <main class="w-100 d-flex fill-height flex-column" style="max-height: 100%; overflow-y: hidden; ">
     <router-view />
-  </v-main>
+  </main>
 </template>
 
 <script setup>

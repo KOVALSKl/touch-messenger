@@ -15,13 +15,13 @@
         </div>
       </header>
       <default-view />
+      <footer class="footer" v-if="isLoggedIn & !isChat">
+        <div class="d-flex position-sm-fixed position-fixed d-sm-flex d-md-none d-lg-none align-center justify-center w-100"
+             id="menu">
+          <menu-tabs></menu-tabs>
+        </div>
+      </footer>
     </v-container>
-    <footer class="footer" v-if="isLoggedIn & !isChat">
-      <div class="d-flex position-sm-fixed position-fixed d-sm-flex d-md-none d-lg-none align-center justify-center w-100"
-           id="menu">
-        <menu-tabs></menu-tabs>
-      </div>
-    </footer>
   </v-app>
 </template>
 
