@@ -141,7 +141,6 @@
       },
 
       scrollDown() {
-        console.log(this.messagesContainer.scrollHeight);
         this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
         this.isAutoScrolling = false;
       },
@@ -194,10 +193,11 @@
 
       messages: {
         handler(value) {
-          console.log(value)
           if (value && value.length > 0) {
-            console.log(this.messagesContainer.scrollHeight)
-            this.scrollDown();
+            setTimeout(
+              this.scrollDown,
+              100
+            )
           }
         },
         deep: true
@@ -215,13 +215,6 @@
           )
         )
       }
-    },
-
-    mounted() {
-      console.log('activated')
-      setTimeout(() => {
-
-      }, 5000)
     },
 
     unmounted() {
