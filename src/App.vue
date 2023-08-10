@@ -20,7 +20,11 @@
 
       activeChat() {
         return this.$store.state.activeChat;
-      }
+      },
+
+      user() {
+        return this.$store.state.user;
+      },
     },
     methods: {
       createConnection() {
@@ -46,11 +50,17 @@
 
           if(this.activeChat && this.activeChat.id == responseMessage.chat_id) {
             this.activeChat.messages.push(messageModel)
+            console.log(messageModel)
           } else {
+            console.log(messageModel)
             const chatModel = this.getChatByID(responseMessage.chat_id)
-            if (chatModel) {
-              chatModel.messages.push(messageModel)
+            if (chatModel.unread) {
+              // chatModel.messages.push(messageModel)
+              chatModel.unread++;
+            } else {
+              chatModel.unread = 1;
             }
+            console.log(chatModel)
           }
           this.$store.commit('setIsMessageSending', false);
         }
@@ -88,7 +98,10 @@
       }
     },
     mounted() {
-      this.router
+    },
+
+    unmounted() {
+      console.log('unmount')
     }
   }
 </script>

@@ -2,7 +2,13 @@
   <router-view>
     <loading-spinner v-if="loading"/>
     <div class="d-flex flex-column" style="gap: 15px;" v-else>
-      <chat-card v-for="chat in this.chats" :chat-name="chat.chat_name" :id="chat.chat_id" :key="chat.chat_id">
+      <chat-card
+        v-for="chat in this.chats"
+        :chat-name="chat.chat_name"
+        :id="chat.chat_id"
+        :key="chat.chat_id"
+        :unread-messages-count="chat.unread"
+      >
         <template #chat-name>
           {{chat.chat_name}}
         </template>
@@ -36,7 +42,7 @@
             </div>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
+            <v-btn color="primary" block @click="dialog = false">Закрыть</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

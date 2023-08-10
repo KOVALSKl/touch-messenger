@@ -5,6 +5,7 @@ const store = createStore({
     userWebSocketConnection: null,
     user: null,
     activeChat: null,
+    activeChatMeta: null,
     userChats: [],
     isLoggedIn: false,
     isMessageSending: false,
@@ -29,6 +30,10 @@ const store = createStore({
 
     setActiveChat(state, chatModel) {
       state.activeChat = chatModel
+    },
+
+    setActiveChatMeta(state, chatModel) {
+      state.activeChatMeta = chatModel
     },
 
     setIsMessageSending(state, status) {

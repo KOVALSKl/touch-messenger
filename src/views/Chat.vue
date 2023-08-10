@@ -106,7 +106,7 @@
 
       messagesContainer() {
         return document.getElementById('messages-container');
-      }
+      },
     },
 
     methods: {
@@ -186,7 +186,7 @@
       loading(value) {
         if (!value) {
           this.isAutoScrolling = true;
-          this.scrollDown()
+          this.scrollDown();
         }
       },
 

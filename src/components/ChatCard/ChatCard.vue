@@ -2,30 +2,37 @@
   <router-link :to="`/chats/${this.id}?name=${this.chatName}`" class="text-decoration-none">
     <v-card
       elevation="0"
-      class="bg-card-bg d-flex chat-card"
+      class="bg-card-bg d-flex align-center justify-space-between chat-card"
       style="gap: 10px;"
       min-width="340"
     >
-      <div class="avatar">
-        <v-avatar color="black" rounded="0" size="60">
-          TS
-        </v-avatar>
-      </div>
-
-      <div class="content d-flex flex-column justify-center" style="gap: 5px;">
-        <div class="chat-name">
-          <slot name="chat-name">
+      <div class="chat-container d-flex align-center w-100" style="gap:10px;">
+        <div class="avatar">
+          <v-avatar color="black" rounded="0" size="60">
+            TS
+          </v-avatar>
+        </div>
+        <div class="content d-flex flex-column justify-center" style="gap: 5px;">
+          <div class="chat-name">
+            <slot name="chat-name">
           <span class="font-weight-medium">
             Travis Scott
           </span>
-          </slot>
-        </div>
+            </slot>
+          </div>
 
-        <div class="last-message">
-          <slot name="last-message">
-            this is the last message
-          </slot>
+          <div class="last-message">
+            <slot name="last-message">
+              this is the last message
+            </slot>
+          </div>
         </div>
+      </div>
+      <div class="unread-messages d-flex align-center justify-center" v-if="unreadMessagesCount !== 0">
+        <v-badge
+          color="primary"
+          :content="unreadMessagesCount"
+        />
       </div>
     </v-card>
   </router-link>
@@ -37,6 +44,10 @@
     props: {
       id: String,
       chatName: String,
+      unreadMessagesCount: {
+        type: Number,
+        default: () => 0,
+      },
     },
     components: {},
     data() {
@@ -44,18 +55,23 @@
 
       }
     },
-
   }
 </script>
 
 <style>
   .chat-card {
-    padding: 5px 17px 5px 5px !important;
+    padding: 5px 15px 5px 5px !important;
     border-radius: 20px !important;
   }
 
   .avatar {
     border-radius: 20px;
     overflow: hidden;
+  }
+
+  .badge {
+    font-size: 14px;
+    padding: 3px 6px;
+    border-radius: 100%;
   }
 </style>
