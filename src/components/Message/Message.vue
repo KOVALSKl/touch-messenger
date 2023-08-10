@@ -14,8 +14,8 @@
             </slot>
         </span>
       </div>
-      <div class="send-time mr-1 ml-1">
-        <span class="sender-name send-time__value font-weight-bold">{{message.creator_login}} &nbsp;</span>
+      <div class="send-time mr-2 ml-2">
+        <span class="sender-name send-time__value font-weight-bold" v-if="!isMine">{{message.creator_login}} &nbsp;</span>
         <span class="send-time__value font-weight-bold">{{sendMessageTime}}</span>
       </div>
     </div>
@@ -73,6 +73,10 @@
   .message {
     font-size: 14px;
     border-radius: 15px 15px 15px 15px;
+  }
+
+  .send-time {
+    margin-top: -5px;
   }
 
   .send-time__value {

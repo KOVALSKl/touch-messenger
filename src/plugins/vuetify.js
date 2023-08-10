@@ -20,7 +20,7 @@ export default createVuetify({
         colors: {
           primary: '#1867C0',
           secondary: '#5CBBF6',
-          'card-bg': '#F2F2F2',
+          'card-bg': '#dbdbdb',
           'alien-message': '#7192b4',
         },
       },

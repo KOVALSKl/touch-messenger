@@ -54,8 +54,7 @@
   import TouchTextField from '@/components/TouchTextField/TouchTextField';
 
   import {Message, MessageType, UserStatus, WebSocketMessage} from "@/lib/classes";
-  import {cookieMixin} from '@/lib/mixins'
-  import {nextTick} from "vue";
+  import {cookieMixin} from '@/lib/mixins';
 
   export default {
     name: 'Chat',
@@ -93,12 +92,12 @@
         return this.$store.state.userWebSocketConnection;
       },
 
-      chatID() {
-        return this.$route.params.id;
+      chatName() {
+        return this.$route.query.name;
       },
 
-      chatName() {
-        return this.$route.query.name
+      chatID() {
+        return this.$route.params.id;
       },
 
       isMessageSending() {
