@@ -20,6 +20,10 @@ const store = createStore({
       state.userChats = chats;
     },
 
+    addUserChat(state, chat) {
+      state.userChats.push(chat)
+    },
+
     setUser(state, user) {
       state.user = user;
     },

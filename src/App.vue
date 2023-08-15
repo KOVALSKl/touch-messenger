@@ -46,21 +46,26 @@
 
         userConnection.onmessage = (response) => {
           const responseMessage = JSON.parse(response.data)
-          const messageModel = responseMessage.message.content
+          const messageModelType = responseMessage.message.type
+          const messageModelContent = responseMessage.message.content
 
-          if(this.activeChat && this.activeChat.id == responseMessage.chat_id) {
-            this.activeChat.messages.push(messageModel)
-            console.log(messageModel)
-          } else {
-            console.log(messageModel)
-            const chatModel = this.getChatByID(responseMessage.chat_id)
-            if (chatModel.unread) {
-              // chatModel.messages.push(messageModel)
-              chatModel.unread++;
-            } else {
-              chatModel.unread = 1;
-            }
-            console.log(chatModel)
+          switch (messageModelType) {
+            case 0:
+              if (this.activeChat && this.activeChat.id == responseMessage.chat_id) {
+                this.activeChat.messages.push(messageModelContent)
+              } else {
+                const chatModel = this.getChatByID(responseMessage.chat_id)
+                if (chatModel.unread) {
+                  chatModel.unread++;
+                } else {
+                  chatModel.unread = 1;
+                }
+              }
+              break;
+            case 2:
+              console.log(messageModelContent)
+              this.$store.commit('addUserChat', messageModelContent);
+              break;
           }
           this.$store.commit('setIsMessageSending', false);
         }
@@ -94,6 +99,13 @@
         if (userStatus) {
           this.createConnection()
           this.getUserFromToken()
+        }
+      },
+
+      activeChat(model) {
+        if (model) {
+          const activeChatMetaModel = this.getChatByID(model.id)
+          activeChatMetaModel.unread = 0;
         }
       }
     },
