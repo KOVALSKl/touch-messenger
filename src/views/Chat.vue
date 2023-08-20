@@ -1,6 +1,6 @@
 <template>
   <router-view>
-    <loading-spinner v-if="loading & !chat & !messages & !isAutoScrolling"/>
+    <loading-spinner v-if="!chat || loading || isAutoScrolling || !messages"/>
     <div class="d-flex flex-column justify-space-between fill-height overflow-hidden chat-container">
       <header class="d-flex justify-space-between align-center w-100 chat-content-border chat-header">
         <div class="avatar">
@@ -8,7 +8,7 @@
             TS
           </v-avatar>
         </div>
-        <h3>{{chatName}}</h3>
+        <h3>{{chat?.chat_name}}</h3>
       </header>
       <main class="overflow-y-auto" id="messages-container">
         <div class="messages" id="messages">
@@ -92,10 +92,6 @@
         return this.$store.state.userWebSocketConnection;
       },
 
-      chatName() {
-        return this.$route.query.name;
-      },
-
       chatID() {
         return this.$route.params.id;
       },
@@ -176,6 +172,7 @@
 
       chat(value) {
         if (value) {
+          console.log(value)
           this.$store.commit('setActiveChat', {
             id: this.chatID,
             ...value

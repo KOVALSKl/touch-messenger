@@ -5,6 +5,8 @@
 <script>
   import Cookies from "js-cookie";
   import jwtDecode from "jwt-decode";
+  import {Message, MessageType, WebSocketMessage} from "@/lib/classes";
+  import moment from "moment";
 
   export default {
     name: 'App',
@@ -25,12 +27,16 @@
       user() {
         return this.$store.state.user;
       },
+
+      userConnection() {
+        return this.$store.state.userWebSocketConnection;
+      },
     },
     methods: {
       createConnection() {
         let token = Cookies.get(import.meta.env.VITE_TOKEN_NAME)
         const userConnection = new WebSocket(
-          `wss://${import.meta.env.VITE_API_LINK_PAYLOAD}/communication/ws?auth_token=${token}`
+          `ws://${import.meta.env.VITE_API_LINK_PAYLOAD}/communication/ws?auth_token=${token}`
         )
 
         userConnection.onopen = () => {
@@ -111,9 +117,5 @@
     },
     mounted() {
     },
-
-    unmounted() {
-      console.log('unmount')
-    }
   }
 </script>
