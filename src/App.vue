@@ -36,7 +36,7 @@
       createConnection() {
         let token = Cookies.get(import.meta.env.VITE_TOKEN_NAME)
         const userConnection = new WebSocket(
-          `ws://${import.meta.env.VITE_API_LINK_PAYLOAD}/communication/ws?auth_token=${token}`
+          `wss://${import.meta.env.VITE_API_LINK_PAYLOAD}/communication/ws?auth_token=${token}`
         )
 
         userConnection.onopen = () => {
