@@ -49,7 +49,6 @@
         userConnection.onerror = (err) => {
           console.log(err)
         }
-
         userConnection.onmessage = (response) => {
           const responseMessage = JSON.parse(response.data)
           const messageModelType = responseMessage.message.type
@@ -69,7 +68,6 @@
               }
               break;
             case 2:
-              console.log(messageModelContent)
               this.$store.commit('addUserChat', messageModelContent);
               break;
           }
@@ -111,7 +109,8 @@
       activeChat(model) {
         if (model) {
           const activeChatMetaModel = this.getChatByID(model.id)
-          activeChatMetaModel.unread = 0;
+          if (activeChatMetaModel)
+            activeChatMetaModel.unread = 0;
         }
       }
     },

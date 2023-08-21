@@ -2,6 +2,16 @@
   <router-view>
     <loading-spinner v-if="!chat || loading || isAutoScrolling || !messages"/>
     <div class="d-flex flex-column justify-space-between fill-height overflow-hidden chat-container">
+      <router-link
+        class="position-absolute text-decoration-none text-black"
+        to="/chats"
+        style="left: 30px; top: 25px;"
+      >
+            <span class="d-flex align-center">
+              <span class="mdi mdi-menu-left text-h5"></span>
+              <span class="font-weight-bold" style="margin-left: -5px; margin-top: -1px;">чаты</span>
+            </span>
+      </router-link>
       <header class="d-flex justify-space-between align-center w-100 chat-content-border chat-header">
         <div class="avatar">
           <v-avatar color="grey" rounded="0" size="50">
@@ -9,6 +19,11 @@
           </v-avatar>
         </div>
         <h3>{{chat?.chat_name}}</h3>
+        <div class="d-flex align-center justify-space-between">
+          <router-link class="d-flex align-center" to="/settings">
+            <settings-icon/>
+          </router-link>
+        </div>
       </header>
       <main class="overflow-y-auto" id="messages-container">
         <div class="messages" id="messages">
@@ -51,10 +66,13 @@
   import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
   import ChatMessage from "@/components/Message/Message"
   import SendIcon from "@/components/Icons/SendIcon";
+  import SettingsIcon from "@/components/Icons/SettingsIcon";
+  import FriendsIcon from "@/components/Icons/FriendsIcon";
   import TouchTextField from '@/components/TouchTextField/TouchTextField';
 
   import {Message, MessageType, UserStatus, WebSocketMessage} from "@/lib/classes";
   import {cookieMixin} from '@/lib/mixins';
+  import FriendIcon from "@/components/Icons/FriendsIcon";
 
   export default {
     name: 'Chat',
@@ -66,9 +84,12 @@
       cookieMixin,
     ],
     components: {
+      FriendIcon,
       LoadingSpinner,
       ChatMessage,
       SendIcon,
+      SettingsIcon,
+      FriendsIcon,
       TouchTextField,
     },
     data() {

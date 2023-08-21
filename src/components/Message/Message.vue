@@ -14,9 +14,12 @@
             </slot>
         </span>
       </div>
-      <div class="send-time mr-2 ml-2">
-        <span class="sender-name send-time__value font-weight-bold" v-if="!isMine">{{message.creator_login}} &nbsp;</span>
+      <div class="d-flex align-center send-time pt-1 mr-2 ml-2" style="gap: 3px;">
+        <span class="sender-name send-time__value font-weight-bold" v-if="!isMine">{{message.creator_login}}</span>
         <span class="send-time__value font-weight-bold">{{sendMessageTime}}</span>
+<!--        <span v-if="isMine">-->
+<!--          <span class="mdi mdi-check-all"></span>-->
+<!--        </span>-->
       </div>
     </div>
   </div>

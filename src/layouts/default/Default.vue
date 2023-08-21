@@ -2,7 +2,7 @@
   <v-app class="d-flex flex-column" style="height: 100vh;">
     <v-container class="d-flex flex-column flex-nowrap fill-height" style="gap: 15px; max-height: 100%;">
       <header class="d-flex justify-sm-center justify-center justify-md-space-between justify-lg-space-between w-100">
-        <div class="logo">
+        <div class="logo d-flex align-center">
           <h1 class="font-weight-black text-sm-center text-center text-md-left text-lg-left">
             To<span class="text-primary">u</span>ch
           </h1>
