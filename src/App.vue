@@ -65,9 +65,10 @@
                 } else {
                   chatModel.unread = 1;
                 }
+
                 if (Notification.permission === "granted") {
-                  new Notification(`Новое сообщение от ${responseMessage.creator_login}`, {
-                    body: responseMessage.content
+                  new Notification(`Новое сообщение от ${messageModelContent.creator_login}`, {
+                    body: messageModelContent.content
                   })
                 }
               }
