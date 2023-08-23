@@ -65,6 +65,11 @@
                 } else {
                   chatModel.unread = 1;
                 }
+                if (Notification.permission === "granted") {
+                  new Notification(`Новое сообщение от ${responseMessage.creator_login}`, {
+                    body: responseMessage.content
+                  })
+                }
               }
               break;
             case 2:
@@ -114,7 +119,8 @@
         }
       }
     },
-    mounted() {
+    created() {
+      Notification.requestPermission();
     },
   }
 </script>
