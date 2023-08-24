@@ -7,13 +7,11 @@
         :chat-name="chat.chat_name"
         :id="chat.chat_id"
         :key="chat.chat_id"
+        :last_message="chat.last_message"
         :unread-messages-count="chat.unread"
       >
         <template #chat-name>
           {{chat.chat_name}}
-        </template>
-        <template #last-message>
-          {{chat.created_at}}
         </template>
       </chat-card>
       <v-dialog class="backdrop-blur-sm" v-model="dialog" style="">
@@ -127,7 +125,11 @@
 
       isDialog() {
         return this.chosenUsers.length <= 1
-      }
+      },
+
+      user() {
+        return this.$store.state.user;
+      },
     },
 
     methods: {
@@ -213,7 +215,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .backdrop-blur-sm {
     backdrop-filter: blur(3px)
   }

@@ -17,9 +17,9 @@
       <div class="d-flex align-center send-time pt-1 mr-2 ml-2" style="gap: 3px;">
         <span class="sender-name send-time__value font-weight-bold" v-if="!isMine">{{message.creator_login}}</span>
         <span class="send-time__value font-weight-bold">{{sendMessageTime}}</span>
-<!--        <span v-if="isMine">-->
-<!--          <span class="mdi mdi-check-all"></span>-->
-<!--        </span>-->
+        <!--        <span v-if="isMine">-->
+        <!--          <span class="mdi mdi-check-all"></span>-->
+        <!--        </span>-->
       </div>
     </div>
   </div>
@@ -75,7 +75,14 @@
 
   .message {
     font-size: 14px;
-    border-radius: 15px 15px 15px 15px;
+  }
+
+  .message.mine {
+    border-radius: 15px 15px 0px 15px;
+  }
+
+  .message.alien {
+    border-radius: 15px 15px 15px 0px;
   }
 
   .send-time {

@@ -56,10 +56,11 @@
 
           switch (messageModelType) {
             case 0:
+              const chatModel = this.getChatByID(responseMessage.chat_id)
+
               if (this.activeChat && this.activeChat.id == responseMessage.chat_id) {
                 this.activeChat.messages.push(messageModelContent)
               } else {
-                const chatModel = this.getChatByID(responseMessage.chat_id)
                 if (chatModel.unread) {
                   chatModel.unread++;
                 } else {
@@ -72,6 +73,9 @@
                   })
                 }
               }
+
+              chatModel.last_message = messageModelContent;
+
               break;
             case 2:
               this.$store.commit('addUserChat', messageModelContent);

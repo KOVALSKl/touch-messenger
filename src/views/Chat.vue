@@ -9,7 +9,7 @@
       >
             <span class="d-flex align-center">
               <span class="mdi mdi-menu-left text-h5"></span>
-              <span class="font-weight-bold" style="margin-left: -5px; margin-top: -1px;">чаты</span>
+              <h5 class="font-weight-bold" style="margin-left: -5px; margin-top: -1px;">Чаты</h5>
             </span>
       </router-link>
       <header class="d-flex justify-space-between align-center w-100 chat-content-border chat-header">
@@ -18,7 +18,10 @@
             TS
           </v-avatar>
         </div>
-        <h3>{{chat?.chat_name}}</h3>
+        <div class="chat-name-container d-flex flex-column align-center justify-center">
+          <h3 class="chat-name">{{chat?.chat_name}}</h3>
+          <h6 class="text-success" v-if="chat?.chat_name">Активен</h6>
+        </div>
         <div class="d-flex align-center justify-space-between">
           <router-link class="d-flex align-center" to="/settings">
             <settings-icon/>
@@ -247,8 +250,10 @@
   }
 </script>
 
-<style>
+<style scoped>
   .avatar {
+    width: initial;
+    height: initial;
     border-radius: 20px;
     overflow: hidden;
   }
@@ -264,6 +269,10 @@
 
   .chat-container {
     gap: 10px;
+  }
+
+  .chat-name {
+    font-family: Montserrat Alternates;
   }
 
   #message-form__text-field .v-input__slot {
