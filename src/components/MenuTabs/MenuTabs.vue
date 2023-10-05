@@ -1,18 +1,18 @@
 <template>
   <div color="primary">
-      <router-link to="chats">
+      <router-link to="/chats">
         <v-tab>
           <touch-chat-icon/>
         </v-tab>
       </router-link>
-    
-      <router-link to="friends">
+
+      <router-link to="/friends">
         <v-tab>
           <friend-icon/>
         </v-tab>
       </router-link>
 
-      <router-link to="settings">
+      <router-link to="/settings">
         <v-tab>
           <settings-icon/>
         </v-tab>
@@ -31,10 +31,6 @@
 </script>
 
 <style>
-  .v-slide-group__container .v-btn.v-tab--selected .v-btn__content .v-tab__slider {
-    opacity: 0;
-  }
-
   a:active, a:link {
     color: var(--primary-color)
   }

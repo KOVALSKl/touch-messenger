@@ -20,9 +20,20 @@ export default createVuetify({
         colors: {
           primary: '#1867C0',
           secondary: '#5CBBF6',
-          'card-bg': '#F2F2F2',
+          'card-bg': '#dbdbdb',
+          'alien-message': '#7192b4',
         },
       },
+      dark: {
+        colors: {
+          primary: '#1867C0',
+          secondary: '#5CBBF6',
+          'borders': '#555555',
+          'card-bg': '#555555',
+          'menu-not-active': '#959595',
+
+        }
+      }
     },
   },
   icons: {
