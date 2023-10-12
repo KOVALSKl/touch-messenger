@@ -75,10 +75,14 @@
                   setTimeout(() => {
                     navigator.serviceWorker.ready.then(reg => {
                       reg.getNotifications().then(notifications => {
-                        notifications[notifications.length - 1].close();
+                        for (let i = 0; i < notifications.length; i += 1) {
+                          notifications[i].close();
+                        }
                       })
                     })
                   }, 10000)
+
+
                 }
               }
 
