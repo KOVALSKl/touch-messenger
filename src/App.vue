@@ -71,6 +71,14 @@
                   new Notification(`Новое сообщение от ${messageModelContent.creator_login}`, {
                     body: messageModelContent.content
                   })
+
+                  setTimeout(() => {
+                    navigator.serviceWorker.ready.then(reg => {
+                      reg.getNotifications().then(notifications => {
+                        notifications[notifications.length - 1].close();
+                      })
+                    })
+                  }, 10000)
                 }
               }
 
